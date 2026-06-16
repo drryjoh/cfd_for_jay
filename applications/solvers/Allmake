@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Allmake — build all CodeJeNN-enabled applications.
+#
+# Run from:  applications/solvers/
+# Requires:  OpenFOAM environment sourced.
+#
+# Build order: utilities first, then the main solver.
+# The main solver uses the upstream Allwmake which also builds
+# fluxSchemes_improved, DLBFoam, ROUNDSchemes, and dynamicMesh2D.
+
+set -e
+
+cd "$(dirname "$0")"
+
+echo "=== generateData ==="
+( cd generateData && wmake )
+
+echo "=== checkNNPrediction ==="
+( cd checkNNPrediction && wmake )
+
+echo "=== checkMuNNError ==="
+( cd checkMuNNError && wmake )
+
+echo "=== detonationFoam_V2.0 ==="
+( cd detonationFoam_V2.0 && ./Allwmake )
+
+echo ""
+echo "All applications built successfully."
