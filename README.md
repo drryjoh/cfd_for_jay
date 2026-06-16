@@ -100,6 +100,10 @@ Fully reverses `generate_solvers.sh`:
 cfd_for_jay/
 ├── generate_solvers.sh
 ├── remove_codejenn.sh
+├── tutorials/                               # step-by-step tutorial cases
+├── paper_data/                              # minimal cases for VTK export
+│   ├── nn_off/                              # splitter_1 — Wilke baseline
+│   └── nn_on/                              # splitter_2 — NNHI active
 └── applications/
     └── solvers/
         ├── Allmake                              # top-level build script
@@ -229,6 +233,23 @@ against the solver's own Wilke reference.
 
 ---
 
+## paper_data — VTK Export and Post-Processing
+
+`paper_data/` contains the minimum OpenFOAM files needed to convert the final
+simulation snapshot (t = 6.64×10⁻⁴ s) from both continuation runs to VTK and
+compare them with `post_error_cfd.py`:
+
+| Directory | Source run | `useMuNN` | VTK filename |
+|---|---|---|---|
+| `paper_data/nn_off/` | `splitter_1` | `off` | `H2_O2_N2_splitter_1.vtk` |
+| `paper_data/nn_on/` | `splitter_2` | `on` (NNHI) | `H2_O2_N2_splitter_2.vtk` |
+
+Each case contains only `0.000664/` (field snapshots), `constant/polyMesh/`
+(mesh topology), and a minimal `system/` with no solver libraries.  See
+[paper_data/README.md](paper_data/README.md) for the full `foamToVTK` workflow.
+
+---
+
 ## Build Order
 
 `Allmake` calls the following targets in sequence:
@@ -333,6 +354,19 @@ repository.
 > (NNHI model).
 >
 > Add a summary of this prompt to the main README appendix.
+
+---
+
+### Prompt 4
+
+> Create a `paper_data` folder with two subdirectories (`nn_off/` and `nn_on/`)
+> populated with the minimum required OpenFOAM files from `CodeJeNN_CFD` so
+> that a user can generate VTK files with `foamToVTK`.  Use the final timestamp
+> `0.000664` from `splitter_1` (→ `nn_off`) and `splitter_2` (→ `nn_on`).
+> After running `foamToVTK`, the VTK filenames should be consistent with the
+> post-processing script: `splitter_1` → `_1.vtk` suffix, `splitter_2` →
+> `_2.vtk` suffix.  Update `post_error_cfd.py` to only compare the `nn_off`
+> and `nn_on` cases, removing the `_3.vtk` LoFi reference.
 
 ---
 
