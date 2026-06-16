@@ -1,0 +1,67 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     |                                                 |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      generateDataProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Number of random (T, Y) samples to validate against.
+nSamples        2000;
+
+outputFile      "nn_check_results.csv";
+
+// Species list — must match the order expected by nn_mu_interface.H (H2, O2, N2).
+species ( H2 O2 N2 );
+
+// Importance sampling — must match generateDataProperties in H2_O2_N2_mu_data
+// so that checkNNPrediction evaluates on the same distribution used for training.
+fracPhysical    0.4;
+Y_fuel          (1 0 0);           // pure H2
+Y_oxidizer      (0 0.233 0.767);   // air
+T_fuel          350;               // K
+T_oxidizer      1500;              // K
+T_scatter       200;               // K
+
+// Per-species polynomial data for the reference (polynomial) mu.
+// Must match constant/speciesMu in the solver case AND H2_O2_N2_mu_data.
+//   mu_i [Pa·s] = 0.1 * exp( Mu1 + ln(T)*(Mu2 + ln(T)*(Mu3 + ln(T)*Mu4)) )
+// Coefficients taken directly from constant/speciesMu (H2_O2_N2_splitter).
+
+H2
+{
+    W       2.016;
+    Mu1    -15.61577712441261;
+    Mu2      0.7630864137641021;
+    Mu3     -0.013999183594004275;
+    Mu4      0.0005366603078286574;
+}
+
+O2
+{
+    W       31.998;
+    Mu1    -18.672289150767078;
+    Mu2      2.2974792436936537;
+    Mu3     -0.21218322378202903;
+    Mu4      0.00904821973598157;
+}
+
+N2
+{
+    W       28.014;
+    Mu1    -18.153624429331092;
+    Mu2      2.041471354469998;
+    Mu3     -0.1792850212226811;
+    Mu4      0.007640846835270048;
+}
+
+// ************************************************************************* //

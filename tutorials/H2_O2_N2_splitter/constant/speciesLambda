@@ -1,0 +1,44 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     |                                                 |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      speciesLambda;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// log-polynomial conductivity coefficients: lambda = 1e-5*exp(Lambda1 + ln(T)*Lambda2 + ln(T)^2*Lambda3 + ln(T)^3*Lambda4)
+// Lambda1-4 are the first 4 values of kappaLogCoeffs<8> from thermo.foam
+
+H2
+{
+    Lambda1    -0.898869749135441;
+    Lambda2    -1.22200407476082;
+    Lambda3     0.2460195011298471;
+    Lambda4    -0.009813961394056868;
+}
+
+O2
+{
+    Lambda1   -11.960457240603821;
+    Lambda2     2.2745407308076535;
+    Lambda3    -0.18670769283887337;
+    Lambda4     0.0077127600376132605;
+}
+
+N2
+{
+    Lambda1    -4.562190122822807;
+    Lambda2    -0.9236071565344935;
+    Lambda3     0.2695496546546726;
+    Lambda4    -0.013950279455526975;
+}
+
+// ************************************************************************* //

@@ -1,0 +1,35 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     |                                                 |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      thermophysicalProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+thermoType
+{
+    type            hePsiThermo;
+    mixture         multiComponentMixture;
+    transport       sutherland;
+    thermo          janaf;
+    energy          sensibleInternalEnergy;
+    equationOfState perfectGas;
+    specie          specie;
+}
+
+// N2 is the inert diluent — its mass fraction is computed as 1 - sum(others).
+inertSpecie     N2;
+
+#include "$FOAM_CASE/constant/foam/species.foam"
+#include "$FOAM_CASE/constant/foam/thermo.foam"
+
+// ************************************************************************* //

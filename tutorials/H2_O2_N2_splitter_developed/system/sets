@@ -1,0 +1,50 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| OpenFOAM 8                                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      sets;
+}
+
+type            sets;
+libs            ("libsampling.so");
+
+writeControl    timeStep;
+writeInterval   1;
+
+interpolationScheme cellPoint;
+setFormat       raw;
+
+fields
+(
+    T
+);
+
+sets
+(
+    centerline
+    {
+        type    uniform;
+        axis    distance;
+
+        start   (0      0.0025 0);
+        end     (0.015  0.0025 0);
+
+        nPoints 500;
+    }
+
+    vertical_x5mm
+    {
+        type    uniform;
+        axis    y;
+
+        start   (0.005 0     0);
+        end     (0.005 0.005 0);
+
+        nPoints 300;
+    }
+);

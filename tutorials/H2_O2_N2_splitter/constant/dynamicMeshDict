@@ -1,0 +1,54 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     |                                                 |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      dynamicMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dynamicFvMesh   staticFvMesh;
+
+dynamicRefineFvMesh2DCoeffs
+{
+    // Attempt refinement/coarsening every N timesteps.
+    refineInterval  5;
+
+    // Maximum total cells (approximate).
+    maxCells        5000000;
+
+    // Maximum refinement depth from the base mesh.
+    // Base cell ~200 um; 4 levels => ~12.5 um minimum.
+    maxRefinement   4;
+
+    // Field used to decide where to refine.
+    // rho spans ~0.070 kg/m3 (pure H2) to ~0.234 kg/m3 (pure air)
+    // at 101325 Pa.  Refine the mixed-density interface.
+    field           rho;
+    lowerRefineLevel 0.080;   // just above pure-H2 density
+    upperRefineLevel 0.220;   // just below pure-air density
+    unrefineLevel   0.075;    // coarsen if rho drops below this
+
+    // Buffer layers around refined region.
+    nBufferLayers   2;
+    nBufferLayersR  2;
+
+    // 2D empty-axis definition (z-direction, midplane at z=0).
+    axis            2;
+    axisVal         0;
+
+    // Flux correction after refinement.
+    correctFluxes   ((phi U));
+
+    dumpLevel       false;
+}
+
+// ************************************************************************* //

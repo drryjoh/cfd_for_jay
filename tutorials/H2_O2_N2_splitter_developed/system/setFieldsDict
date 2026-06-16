@@ -1,0 +1,39 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| OpenFOAM 8                                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setFieldsDict;
+}
+
+defaultFieldValues
+(
+    volScalarFieldValue H2 0
+    volScalarFieldValue O2 0.233
+    volScalarFieldValue N2 0.767
+    volScalarFieldValue T  1500
+    volScalarFieldValue p  101325
+    volVectorFieldValue U  (226 0 0)
+);
+
+regions
+(
+    boxToCell
+    {
+        box (0 0 -1e-3) (0.015 0.0025 1e-3);
+
+        fieldValues
+        (
+            volScalarFieldValue H2 1
+            volScalarFieldValue O2 0
+            volScalarFieldValue N2 0
+            volScalarFieldValue T  350
+            volScalarFieldValue p  101325
+            volVectorFieldValue U  (427 0 0)
+        );
+    }
+);

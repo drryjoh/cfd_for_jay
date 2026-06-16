@@ -11,15 +11,41 @@ those changes.
 
 ---
 
+## Prerequisites — Installing OpenFOAM 8
+
+Download and install OpenFOAM 8 from the official source:
+
+```
+https://openfoam.org/download/8-source/
+```
+
+Follow the platform-specific build instructions provided there.  After
+installation, confirm that sourcing the environment works:
+
+```bash
+source /path/to/OpenFOAM-8/etc/bashrc
+foamVersion   # should print 8
+```
+
+---
+
 ## Quick Start
 
 ```bash
 git clone <this-repo> cfd_for_jay
 cd cfd_for_jay
 ./generate_solvers.sh          # clones detonationFoam and patches it
+source /path/to/OpenFOAM-8/etc/bashrc
 cd detonationFoam/applications/solvers
-source /path/to/OpenFOAM/etc/bashrc   # source your OpenFOAM environment
 ./Allmake                      # build everything
+```
+
+After a successful build, confirm with:
+
+```bash
+which generateData
+which checkNNPrediction
+which detonationFoam_V2.0
 ```
 
 To undo all modifications and restore the clean clone:
@@ -282,6 +308,31 @@ This folder was created by Claude Code in response to two user prompts.
 This was sent after the first response stalled mid-execution. It caused the
 assistant to resume and complete the file-writing pass that produced this
 repository.
+
+---
+
+### Prompt 3
+
+> Add to the main README.md instructions for how to build all solvers if this
+> has not already been added. The README should instruct the user to first
+> download and install OpenFOAM 8, then build and install the applications
+> provided in this repository.
+>
+> Copy the tutorials from CodeJeNN_CFD into cfd_for_jay, minimising the files
+> as appropriate (removing backups, variants, etc.) so the minimum set of files
+> needed to run the tutorials is present.
+>
+> Create a tutorials/README.md that walks the user through the full CodeJeNN
+> workflow: generating training data for the viscosity neural network, verifying
+> the network, running a baseline splitter-plate CFD case, and then continuing
+> that case with and without the NN model active.
+>
+> Write a portable submit_splitter_1_2.sh (no hardcoded cluster paths) that
+> submits two SLURM jobs continuing from the developed solution at
+> t = 3.32×10⁻⁴ s: one baseline run (Wilke viscosity) and one NN-enabled run
+> (NNHI model).
+>
+> Add a summary of this prompt to the main README appendix.
 
 ---
 

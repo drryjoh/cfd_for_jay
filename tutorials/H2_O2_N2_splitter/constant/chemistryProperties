@@ -1,0 +1,58 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     |                                                 |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      chemistryProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+refmapping
+{
+}
+
+loadbalancing
+{
+    active  false;
+    log     false;
+}
+
+// Reactions are disabled — this is a non-reacting mixing-layer case.
+chemistry       off;
+
+initialChemicalTimeStep 1;
+
+chemistryType
+{
+    solver          ode;
+    method          loadBalanced;
+}
+
+odeCoeffs
+{
+    solver          seulex;
+    absTol          1e-06;
+    relTol          1e-03;
+}
+
+#include "$FOAM_CASE/constant/foam/reactions.foam"
+
+differentialDiffusion   on;
+thermalDiffusion        off;
+useDiffNN               off;
+useMuNN                 off;
+muNNmodel               NNHI;   // NNHI, NNLO (only used when useMuNN on)
+computeMuNNerror        off;    // write mu_err field (relative error vs Wilke)
+
+Prt  Prt [0 0 0 0 0] 0.7;
+Sct  Sct [0 0 0 0 0] 0.7;
+
+// ************************************************************************* //

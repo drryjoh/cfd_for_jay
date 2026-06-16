@@ -1,0 +1,61 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     |                                                 |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    location    "0";
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Air:  M=0.3, c=753 m/s  =>  U = 226 m/s
+// Fuel: M=0.3, c=1422 m/s =>  U = 427 m/s
+// Interior initialised with air conditions.
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+    inletAir
+    {
+        type        fixedValue;
+        value       uniform (226 0 0);
+    }
+
+    inletFuel
+    {
+        type        fixedValue;
+        value       uniform (427 0 0);
+    }
+
+    top
+    {
+        type        zeroGradient;
+    }
+
+    bottom
+    {
+        type        zeroGradient;
+    }
+
+    outlet
+    {
+        type        zeroGradient;
+    }
+
+    frontAndBack
+    {
+        type        empty;
+    }
+}
+
+// ************************************************************************* //

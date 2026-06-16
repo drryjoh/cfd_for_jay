@@ -1,0 +1,74 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     |                                                 |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      binaryDiff;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// Binary diffusion log-polynomial coefficients.
+// Formula: D [m^2/s] = 1e-4 * exp(Diff1 + ln(T)*Diff2 + ln(T)^2*Diff3 + ln(T)^3*Diff4) / (p/101325)
+// Fitted from Chapman-Enskog kinetic theory (GRI-Mech LJ parameters).
+// All 6 pairs (including self-pairs) are required by the reader.
+
+// --- self-diffusion pairs (required by reader, not physically used in mixture flux) ---
+
+H2-H2
+{
+    Diff1   -9.055;
+    Diff2    1.655;
+    Diff3    0.0;
+    Diff4    0.0;
+}
+
+O2-O2
+{
+    Diff1   -11.213;
+    Diff2    1.691;
+    Diff3    0.0;
+    Diff4    0.0;
+}
+
+N2-N2
+{
+    Diff1   -11.153;
+    Diff2    1.682;
+    Diff3    0.0;
+    Diff4    0.0;
+}
+
+// --- cross-diffusion pairs ---
+
+H2-O2
+{
+    Diff1   -9.735;
+    Diff2    1.669;
+    Diff3    0.0;
+    Diff4    0.0;
+}
+
+H2-N2
+{
+    Diff1   -9.770;
+    Diff2    1.669;
+    Diff3    0.0;
+    Diff4    0.0;
+}
+
+O2-N2
+{
+    Diff1   -11.200;
+    Diff2    1.690;
+    Diff3    0.0;
+    Diff4    0.0;
+}
+
+// ************************************************************************* //

@@ -1,0 +1,47 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     |                                                 |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      thermoDiff;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// Thermal diffusion ratio polynomial coefficients for H and H2.
+// Formula: k_T = ThermDiff_1 + T*ThermDiff_2 + T^2*ThermDiff_3 + T^3*ThermDiff_4
+// Required for all H2-{species} pairs (and H2-H2 self-pair) even when thermalDiffusion is off.
+// Values are small-but-nonzero representative H2 thermal diffusion ratios.
+
+// H2-H2 self-pair: required by the reader loop; values are never applied.
+H2-H2
+{
+    ThermDiff_1    0.0;
+    ThermDiff_2    0.0;
+    ThermDiff_3    0.0;
+    ThermDiff_4    0.0;
+}
+
+H2-O2
+{
+    ThermDiff_1    0.05;
+    ThermDiff_2    0.0;
+    ThermDiff_3    0.0;
+    ThermDiff_4    0.0;
+}
+
+H2-N2
+{
+    ThermDiff_1    0.05;
+    ThermDiff_2    0.0;
+    ThermDiff_3    0.0;
+    ThermDiff_4    0.0;
+}
+
+// ************************************************************************* //
